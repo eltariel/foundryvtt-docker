@@ -108,14 +108,14 @@ jobs:
             echo "do_decryption=false" >> $GITHUB_OUTPUT
           fi
 
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # tag=v6.0.1
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # tag=v6.0.2
       - id: setup-python
-        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # tag=v6.1.0
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # tag=v6.2.0
         with:
           python-version: ${{ inputs.python_version }}
 
       - name: Cache testing environments
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # tag=v4.3.0
+        uses: actions/cache@8b402f58fbc84540c8b491a91e594a4576fec3d7 # tag=v5.0.2
         env:
           BASE_CACHE_KEY: "${{ github.job }}-${{ runner.os }}-\
             py${{ steps.setup-python.outputs.python-version }}-"
@@ -133,7 +133,7 @@ jobs:
           pip install --upgrade --requirement requirements-test.txt
 
       - name: Download container image artifact
-        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # tag=v6.0.0
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # tag=v7.0.0
         with:
           name: ${{ inputs.image_artifact_name }}
           path: ${{ env.ARTIFACT_WORK_DIR }}
@@ -184,7 +184,7 @@ jobs:
 
       - name: Upload unencrypted data artifacts
         if: ( success() || failure() ) && steps.check_data_archive_key.outputs.do_encryption == 'false'
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # tag=v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # tag=v6.0.0
         with:
           name: ${{ inputs.data_artifact_name }}
           path: data.tar.gz
@@ -192,7 +192,7 @@ jobs:
 
       - name: Upload encrypted data artifacts
         if: ( success() || failure() ) && steps.check_data_archive_key.outputs.do_encryption == 'true'
-        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # tag=v5.0.0
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # tag=v6.0.0
         with:
           name: ${{ inputs.data_artifact_name }}
           path: data.tar.7z
